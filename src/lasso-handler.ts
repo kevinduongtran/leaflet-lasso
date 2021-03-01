@@ -186,12 +186,16 @@ export class LassoHandler extends L.Handler {
             crs: this.map.options.crs,
             intersect: this.options.intersect,
         });
-
-        this.map.fire(FINISHED_EVENT, {
-            latLngs: this.polygon.getLatLngs(),
-            layers: selectedFeatures,
-        } as LassoHandlerFinishedEventData);
-
+        
+        try {
+            this.map.fire(FINISHED_EVENT, {
+                latLngs: this.polygon.getLatLngs(),
+                layers: selectedFeatures,
+            } as LassoHandlerFinishedEventData);
+        } catch (error) {
+            console.log(error);
+        }
+        
         this.disable();
     }
 }
